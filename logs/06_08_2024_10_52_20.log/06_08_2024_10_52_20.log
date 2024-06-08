@@ -1,0 +1,51 @@
+[ 2024-06-08 10:52:21,030 ] 224 werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.0.0.29:8080
+[ 2024-06-08 10:52:21,031 ] 224 werkzeug - INFO - [33mPress CTRL+C to quit[0m
+[ 2024-06-08 10:52:40,860 ] 224 werkzeug - INFO - 127.0.0.1 - - [08/Jun/2024 10:52:40] "GET /predictdata HTTP/1.1" 200 -
+[ 2024-06-08 10:52:57,763 ] 1744 app - ERROR - Exception on /predictdata [POST]
+Traceback (most recent call last):
+  File "/Users/shashankreddykandimalla/Documents/GitHub/AWS-CI-CD-Projects/src/pipeline/predict_pipeline.py", line 18, in predict
+    data_scaled=preprocessor.transform(features)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/sklearn/utils/_set_output.py", line 157, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/sklearn/compose/_column_transformer.py", line 827, in transform
+    Xs = self._fit_transform(
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/sklearn/compose/_column_transformer.py", line 681, in _fit_transform
+    return Parallel(n_jobs=self.n_jobs)(
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/sklearn/utils/parallel.py", line 65, in __call__
+    return super().__call__(iterable_with_config)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/joblib/parallel.py", line 1863, in __call__
+    return output if self.return_generator else list(output)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/joblib/parallel.py", line 1792, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/sklearn/utils/parallel.py", line 127, in __call__
+    return self.function(*args, **kwargs)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/sklearn/pipeline.py", line 940, in _transform_one
+    res = transformer.transform(X)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/sklearn/pipeline.py", line 696, in transform
+    Xt = transform.transform(Xt)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/sklearn/utils/_set_output.py", line 157, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/sklearn/preprocessing/_encoders.py", line 1036, in transform
+    if self._drop_idx_after_grouping is not None:
+AttributeError: 'OneHotEncoder' object has no attribute '_drop_idx_after_grouping'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/flask/app.py", line 2529, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/shashankreddykandimalla/opt/anaconda3/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/shashankreddykandimalla/Documents/GitHub/AWS-CI-CD-Projects/app.py", line 37, in predict_datapoint
+    results=predict_pipeline.predict(pred_df)
+  File "/Users/shashankreddykandimalla/Documents/GitHub/AWS-CI-CD-Projects/src/pipeline/predict_pipeline.py", line 23, in predict
+    raise CustomException(e,sys)
+src.exception.CustomException: Error occured in python script name [/Users/shashankreddykandimalla/Documents/GitHub/AWS-CI-CD-Projects/src/pipeline/predict_pipeline.py] line number [18] error message['OneHotEncoder' object has no attribute '_drop_idx_after_grouping']
+[ 2024-06-08 10:52:57,778 ] 224 werkzeug - INFO - 127.0.0.1 - - [08/Jun/2024 10:52:57] "[35m[1mPOST /predictdata HTTP/1.1[0m" 500 -
